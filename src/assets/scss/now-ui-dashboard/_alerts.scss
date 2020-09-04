@@ -19,11 +19,11 @@
     }
 
     &.alert-info{
-        background-color: lighten($info-color, 5%);
+        background-color: lighten($info-color-new, 5%);
     }
 
     &.alert-primary{
-        background-color: lighten($primary-color, 5%);
+        background-color: lighten($primary-color-new, 5%);
     }
 
 

@@ -88,7 +88,8 @@
 
             > a{
                 margin: 10px 15px 0;
-                border-radius: $btn-round-radius;
+                // border-radius: $btn-round-radius;
+                border-radius: 3px;
                 color: $white-color;
                 display: block;
                 text-decoration: none;
@@ -352,7 +353,7 @@
   height: 260px;
   padding-top: 80px;
   padding-bottom: 45px;
-  @include panel-gradient($black-color);
+  @include panel-gradient($info-color);
   position: relative;
   overflow: hidden;
 

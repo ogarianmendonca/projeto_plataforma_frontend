@@ -1,7 +1,6 @@
 //== Buttons
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
-
 $sans-serif-family:          'Montserrat', 'Helvetica Neue',  Arial, sans-serif;
 
 $none:                       0   !default;
@@ -30,13 +29,11 @@ $opacity-gray-3:             rgba(222,222,222, .3) !default;
 $opacity-gray-5:             rgba(222,222,222, .5) !default;
 $opacity-gray-8:             rgba(222,222,222, .8) !default;
 
-
 $opacity-5:                  rgba(255,255,255, .5) !default;
 $opacity-8:                  rgba(255,255,255, .8) !default;
 
 $datepicker-color-days:             rgba(255,255,255, .8)  !default;
 $datepicker-color-old-new-days:     rgba(255,255,255, .4)  !default;
-
 
 $opacity-1:                  rgba(255,255,255, .1) !default;
 $opacity-2:                  rgba(255,255,255, .2) !default;
@@ -52,16 +49,20 @@ $primary-color:              #f96332 !default;
 $primary-states-color:       lighten($primary-color, 6%) !default;
 $primary-color-opacity:      rgba(249, 99, 50, .3) !default;
 $primary-color-alert:        rgba(249, 99, 50, .8) !default;
+$primary-color-new:          #3F51B5 !default;
+$primary-states-color-new:   lighten($primary-color-new, 6%) !default;
 
-$success-color:              #18ce0f !default;
+$success-color:              #28a745 !default;
 $success-states-color:       lighten($success-color, 6%) !default;
 $success-color-opacity:      rgba(24, 206, 15, .3) !default;
 $success-color-alert:        rgba(24, 206, 15, .8) !default;
 
-$info-color:                 #2CA8FF !default;
+$info-color:                 #2a95df !default;
 $info-states-color:          lighten($info-color, 6%) !default;
 $info-color-opacity:         rgba(44, 168, 255, .3) !default;
 $info-color-alert:           rgba(44, 168, 255, .8) !default;
+$info-color-new:             #00BCD4 !default;
+$info-states-color-new:      lighten($info-color-new, 6%) !default;
 
 $warning-color:              #FFB236 !default;
 $warning-states-color:       lighten($warning-color, 6%) !default;
@@ -93,8 +94,6 @@ $light-orange:               rgba($warning-color, .2);
 $light-red:                  rgba($danger-color, .2);
 
 //== Components
-//
-
 $padding-input-vertical:        11px !default;
 $padding-input-horizontal:      19px !default;
 
@@ -175,7 +174,6 @@ $btn-icon-line-height:       2.4em          !default;
 $line-height:                1.35em         !default;
 $line-height-lg:             54px           !default;
 
-
 $border-radius-top:        10px 10px 0 0     !default;
 $border-radius-bottom:     0 0 10px 10px     !default;
 
@@ -195,7 +193,6 @@ $select-coordinates:         50% -40px       !default;
 $transition-linear:         linear           !default;
 $transition-bezier:         cubic-bezier(0.34, 1.61, 0.7, 1) !default;
 $transition-ease:           ease 0s;
-
 
 //$navbar-padding-a:               9px 13px;
 $navbar-margin-a:                15px 0px;
@@ -238,7 +235,6 @@ $bottombar-x:          bottombar-x !default;
 $bottombar-back:       bottombar-back !default;
 
 //Nucleo Icons
-
 $nc-font-path:        '../fonts' !default;
 $nc-font-size-base:   14px !default;
 $nc-css-prefix:       now-ui !default;
@@ -262,7 +258,6 @@ $social-linkedin-state-color:        darken(#0077B5, 5%) !default;
 // Sidebar variables
 $sidebar-width:              calc(100% - 260px) !default;
 $sidebar-mini-width:         calc(100% - 80px) !default;
-
 
 // Social icons color
 $social-twitter:                   #55acee !default;
