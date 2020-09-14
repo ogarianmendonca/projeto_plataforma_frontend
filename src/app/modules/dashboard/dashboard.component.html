@@ -107,16 +107,28 @@
 
   <div class="row">
     <div class="col-md-12">
-      <div class="card card-tasks">
-        <div class="card-body" style="background: #2877ae !important;">
-          <canvas baseChart id="bigDashboardChart"
+      <div class="card card-chart" style="background: #2877ae !important;">
+        <div class="card-header">
+          <h5 class="card-category">Statistics</h5>
+          <h4 class="card-title">2019 Performance</h4>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <canvas baseChart id="bigDashboardChart"
             [datasets]="lineBigDashboardChartData"
             [labels]="lineBigDashboardChartLabels"
             [colors]="lineBigDashboardChartColors"
             [options]="lineBigDashboardChartOptions"
             [chartType]="lineBigDashboardChartType"
             (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
+            (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <!-- <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days -->
+          </div>
         </div>
       </div>
     </div>    
