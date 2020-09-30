@@ -13,6 +13,8 @@ import { UpgradeComponent } from '../../modules/upgrade/upgrade.component';
 import { TypographyComponent } from '../../modules/typography/typography.component';
 import { IconsComponent } from '../../modules/icons/icons.component';
 import { NotificationsComponent } from '../../modules/notifications/notifications.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
@@ -21,7 +23,10 @@ import { NotificationsComponent } from '../../modules/notifications/notification
     FormsModule,
     ChartsModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxMaskModule.forChild()
   ],
   declarations: [
     DashboardComponent,

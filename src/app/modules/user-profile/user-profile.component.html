@@ -2,80 +2,224 @@
 </div>
 <div class="main-content">
   <div class="row">
+
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Edit Profile</h5>
+          <h5 class="title">Editar Perfil</h5>
         </div>
+
         <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col-md-5 pr-1">
-                <div class="form-group">
-                  <label>Company (disabled)</label>
-                  <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
-                </div>
-              </div>
-              <div class="col-md-3 px-1">
-                <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" class="form-control" placeholder="Username" value="michael23">
-                </div>
-              </div>
-              <div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input name="email" id="email" type="email" class="form-control" placeholder="Email">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 pr-1">
-                <div class="form-group">
-                  <label>First Name</label>
-                  <input type="text" class="form-control" placeholder="Company" value="Mike">
-                </div>
-              </div>
-              <div class="col-md-6 pl-1">
-                <div class="form-group">
-                  <label>Last Name</label>
-                  <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
-                </div>
-              </div>
-            </div>
+          <form [formGroup]="formUsuario" (ngSubmit)="editaUsuario()" *ngIf="usuario">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
-                  <label>Address</label>
-                  <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 pr-1">
-                <div class="form-group">
-                  <label>City</label>
-                  <input type="text" class="form-control" placeholder="City" value="Mike">
-                </div>
-              </div>
-              <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label>Country</label>
-                  <input type="text" class="form-control" placeholder="Country" value="Andrew">
-                </div>
-              </div>
-              <div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label>Postal Code</label>
-                  <input type="number" class="form-control" placeholder="ZIP Code">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>About Me</label>
-                  <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                  <li [ngbNavItem]="1">
+                    <a ngbNavLink>Dados Básicos</a>
+                    <ng-template ngbNavContent>
+                      <div class="row">
+                        <div class="col-md-6 pr-1">
+                          <div class="form-group"
+                            [ngClass]="{'has-success': formUsuario.controls['name'].valid, 'has-error': formUsuario.controls['name'].invalid && (formUsuario.controls['name'].touched || formUsuario.controls['name'].dirty)}">
+                            <label>Nome</label>
+                            <input type="text" class="form-control" formControlName="name"
+                              [ngClass]="{'is-invalid': formUsuario.get('name').errors && formUsuario.get('name').touched}">
+                            <div *ngIf="formUsuario.get('name').hasError('required') && formUsuario.get('name').touched"
+                              class="invalid-feedback">
+                              Campo obrigatório!
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 pl-1">
+                          <div class="form-group"
+                            [ngClass]="{'has-success': formUsuario.controls['email'].valid, 'has-error': formUsuario.controls['email'].invalid && (formUsuario.controls['email'].touched || formUsuario.controls['email'].dirty)}">
+                            <label for="email">E-mail</label>
+                            <input type="email" class="form-control" formControlName="email"
+                              [ngClass]="{'is-invalid': formUsuario.get('email').errors && formUsuario.get('email').touched}">
+                            <div
+                              *ngIf="formUsuario.get('email').hasError('required') && formUsuario.get('email').touched"
+                              class="invalid-feedback">
+                              Campo obrigatório!
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 pr-1">
+                          <div class="form-group">
+                            <label>Senha</label>
+                            <input formControlName="password" type="password" class="form-control" placeholder="******">
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 pl-1">
+                          <div class="form-group">
+                            <label>Confirmar Senha</label>
+                            <input formControlName="confimarSenha" type="password" class="form-control"
+                              placeholder="******">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 pr-1">
+                          <div class="form-group">
+                            <label>Imagem do Perfil</label>
+                            <br>
+                            <div class="file-upload btn btn-info">
+                              <i _ngcontent-lch-c117="" class="now-ui-icons design_image"></i>
+                              <span> Selecionar Imagem</span>
+                              <input type="file" class="upload" id="imagem" name="imagem"
+                                (change)="carregaImagem($event)">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </li>
+
+                  <li [ngbNavItem]="2" *ngIf="usuario.pessoa">
+                    <a ngbNavLink>Pessoais</a>
+                    <ng-template ngbNavContent formGroupName="pessoa">
+                      <div class="row">
+                        <div class="col-md-3 pr-1">
+                          <div class="form-group">
+                            <label>Documento</label>
+                            <select (change)="tipoDocumentoSelecionado($event)" formControlName="tipo_doc"
+                              class="form-control">
+                              <option value="" disabled>Selecione</option>
+                              <option value="RG">RG</option>
+                              <option value="CPF">CPF</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 px-1">
+                          <div class="form-group">
+                            <label>Número</label>
+                            <input *ngIf="docSelecionadoCPF" formControlName="num_doc" mask="000.000.000-00" type="text"
+                              class="form-control">
+                            <input *ngIf="!docSelecionadoCPF" formControlName="num_doc" mask="00.000.000-0" type="text"
+                              class="form-control">
+                          </div>
+                        </div>
+
+                        <div class="col-md-5 pl-1">
+                          <div class="form-group">
+                            <label>Data Nascimento</label>
+                            <input type="text" formControlName="data_nasc" class="form-control" ngbDatepicker
+                              [minDate]="{year: 1900, month: 1, day: 1}"
+                              [maxDate]="{year: anoVigente, month: 1, day: 1}" #d="ngbDatepicker"
+                              (click)="d.toggle()" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3 pr-1">
+                          <div class="form-group">
+                            <label>Sexo</label>
+                            <select formControlName="sexo" class="form-control">
+                              <option value="" disabled>Selecione</option>
+                              <option value="F">F</option>
+                              <option value="M">M</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 pl-1">
+                          <div class="form-group">
+                            <label>Telefone</label>
+                            <input formControlName="telefone" mask="(00) 00000-0000" type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </li>
+
+                  <li [ngbNavItem]="3" *ngIf="usuario.pessoa">
+                    <a ngbNavLink>Endereço</a>
+                    <ng-template ngbNavContent formGroupName="pessoa">
+                      <div class="row">
+                        <div class="col-md-4 pr-1">
+                          <div class="form-group">
+                            <label>País</label>
+                            <input formControlName="pais" (keyup)="verificaPaisSelecionado($event)" type="text"
+                              class="form-control">
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 px-1">
+                          <div class="form-group">
+                            <label>CEP {{paisSelecionadoBrasil}}</label>
+                            <input *ngIf="paisSelecionadoBrasil" formControlName="cep" mask="00000-000"
+                              (keyup)="buscaPorCEP($event)" type="text" class="form-control">
+                            <input *ngIf="!paisSelecionadoBrasil" formControlName="cep" type="text"
+                              class="form-control">
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 pl-1">
+                          <div class="form-group">
+                            <label>UF</label>
+                            <input formControlName="uf" type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 pr-1">
+                          <div class="form-group">
+                            <label>Cidade</label>
+                            <input formControlName="cidade" type="text" class="form-control">
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 pl-1">
+                          <div class="form-group">
+                            <label>Endereço</label>
+                            <input formControlName="endereco" type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 pr-1">
+                          <div class="form-group">
+                            <label>Bairro</label>
+                            <input formControlName="bairro" type="text" class="form-control">
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 pl-1">
+                          <div class="form-group">
+                            <label>Complemento</label>
+                            <input formControlName="complemento" type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4 pr-1">
+                          <div class="form-group">
+                            <label>Número</label>
+                            <input formControlName="numero" type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </li>
+                </ul>
+
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+                <div class="text-right">
+                  <button [disabled]="formUsuario.invalid" type="submit" class="btn btn-info">
+                    Salvar
+                  </button>
                 </div>
               </div>
             </div>
@@ -83,40 +227,48 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+
+    <div class="col-md-4" *ngIf="usuario">
       <div class="card card-user">
         <div class="image">
-          <img src="../assets/img/bg5.jpg" alt="...">
+          <img *ngIf="usuario?.image !== 'sem_imagem'" src="{{usuario?.image}}" style="filter:blur(15px);" alt="">
+          <img *ngIf="usuario?.image === 'sem_imagem'" src="../assets/img/sem-imagem.jpg" style="filter:blur(15px);"
+            alt="">
         </div>
+
         <div class="card-body">
           <div class="author">
-            <a href="#">
-              <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
-              <h5 class="title">Mike Andrew</h5>
+            <a href="">
+              <img class="avatar border-gray" *ngIf="usuario?.image !== 'sem_imagem'" src="{{usuario?.image}}" alt="">
+              <img class="avatar border-gray" *ngIf="usuario?.image === 'sem_imagem'" src="../assets/img/sem-imagem.jpg"
+                alt="">
+              <h5 class="title">{{usuario?.name}}</h5>
             </a>
             <p class="description">
-              michael24
+              {{usuario?.email}}
+              <br>
+              {{usuario?.pessoa.cidade}}/{{usuario?.pessoa.uf}}
             </p>
           </div>
-          <p class="description text-center">
-            "Lamborghini Mercy
-            <br> Your chick she so thirsty
-            <br> I'm in that two seat Lambo"
+          <p class="text-center">
+            <span [hidden]="usuario?.status == false" style="color:#00BCD4;"><b>Ativo</b></span>
+            <span [hidden]="usuario?.status == true" style="color:#f96332;"><b>Inativo</b></span>
+          </p>
+
+          <p class="description2 text-center">
+            Cadastrado em {{usuario?.created_at | date:'dd/MM/y'}} <br>
           </p>
         </div>
+
         <hr>
         <div class="button-container">
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-            <i class="fab fa-facebook-f"></i>
-          </button>
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-            <i class="fab fa-twitter"></i>
-          </button>
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-            <i class="fab fa-google-plus-g"></i>
-          </button>
+          <p>Funções</p>
+          <h6 *ngFor="let role of usuario?.roles" href="#" class="text-info">
+            ► {{role?.name}}
+          </h6>
         </div>
       </div>
     </div>
+
   </div>
 </div>

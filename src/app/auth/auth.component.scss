@@ -1,0 +1,56 @@
+.row {
+    margin-top: 50px;
+}
+
+.card-login .card-header {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: -40px;
+    padding: 20px 0;
+    margin-bottom: 15px;
+}
+
+.card [class*="header-"], .card[class*="bg-"] {
+    color: #ffffff;
+}
+
+.card .card-header-primary {
+    box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.2), 0 13px 24px -11px rgba(42, 149, 223, 0.6);
+}
+
+.card .card-header-primary, .card.bg-primary, .card.card-rotate.bg-primary .front, .card.card-rotate.bg-primary .back {
+    background: linear-gradient(160deg, #2a95df 0%, #0b2435 150%);
+}
+
+.card .card-header {
+    border-radius: 3px;
+    padding: 1rem 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: -30px;
+    border: 0;
+}
+
+.card {
+    border: 0;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 6px;
+    color: rgba(0, 0, 0, 0.87);
+    background: #ffffff;
+    width: 100%;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card {
+    font-size: .875rem;
+}
+
+.social-line {
+    min-height: 50px;
+}
+
+.input-group-focus-success .input-group-prepend .input-group-text {
+    border-color: #28a745 !important;
+    background-color: #FFFFFF;
+}

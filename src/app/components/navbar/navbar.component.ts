@@ -3,6 +3,9 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
 import Chart from 'chart.js';
+import { AuthService } from '../../services/auth.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Usuario } from '../../models/usuario.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +20,15 @@ export class NavbarComponent implements OnInit {
   private sidebarVisible: boolean;
   public isCollapsed = true;
 
-  constructor(location: Location, private element: ElementRef, private router: Router) {
+  public usuario: Usuario;
+
+  constructor(
+    location: Location, 
+    private element: ElementRef, 
+    private router: Router,
+    private authService: AuthService,
+    private ngxLoader: NgxUiLoaderService
+  ) {
     this.location = location;
     this.sidebarVisible = false;
   }
@@ -34,12 +45,14 @@ export class NavbarComponent implements OnInit {
         this.mobile_menu_visible = 0;
       }
     });
+
+    this.buscaUsuarioLogado();
+    this.atualizaUsuarioLogado();
   }
 
   collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName('nav')[0];
-    console.log(navbar);
     if (!this.isCollapsed) {
       navbar.classList.remove('navbar-transparent');
       navbar.classList.add('bg-white');
@@ -144,7 +157,6 @@ export class NavbarComponent implements OnInit {
       titlee = titlee.slice(2);
     }
     //titlee = titlee.split('/').pop();
-
     for (var item = 0; item < this.listTitles.length; item++) {
       if (this.listTitles[item].path === titlee) {
         return this.listTitles[item].title;
@@ -152,5 +164,34 @@ export class NavbarComponent implements OnInit {
     }
     
     return 'Dashboard';
+  }
+
+  buscaUsuarioLogado() {
+    this.ngxLoader.start();
+
+    this.authService.getUsuarioAutenticado()
+      .subscribe((resp: Usuario) => {
+        this.usuario = resp;
+        this.ngxLoader.stop();
+      });
+  }
+
+  atualizaUsuarioLogado() {
+    this.authService.atualizarPerfil
+    .subscribe((resp: Usuario) => {
+      this.usuario = resp;
+
+      if (!this.authService.getToken()) {
+        this.authService.logout();
+      }
+    });
+  }
+
+  logout(e) {
+    this.ngxLoader.start();
+    e.preventDefault();
+    
+    this.authService.logout();
+    this.ngxLoader.stop();
   }
 }

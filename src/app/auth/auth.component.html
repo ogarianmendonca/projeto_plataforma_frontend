@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 mx-auto">
+      <div class="card card-login">
+        <form [formGroup]="formLogin" class="form" novalidate>
+          <div class="card-header card-header-primary text-center">
+            <h5 class="card-title">PROJETO PLATAFORMA</h5>
+            <div class="social-line">
+              <!-- <a href="javascript:;" class="btn btn-just-icon btn-link">
+                <i class="fa fa-facebook-square"></i>
+              </a>
+              <a href="javascript:;" class="btn btn-just-icon btn-link">
+                <i class="fa fa-twitter"></i>
+              </a>
+              <a href="javascript:;" class="btn btn-just-icon btn-link">
+                <i class="fa fa-google-plus"></i>
+              </a> -->
+            </div>
+          </div>
+
+          <p class="description text-center">LOGIN</p>
+
+          <div class="card-body">
+            <div class="form-group" [ngClass]="{'has-success': formLogin.controls['email'].valid, 'has-error': formLogin.controls['email'].invalid && (formLogin.controls['email'].touched || formLogin.controls['email'].dirty)}">
+              <div class="input-group" [ngClass]="{'input-group-focus':focus1===true && formLogin.controls['email'].invalid, 'input-group-focus-success':focus1===true && formLogin.controls['email'].valid}">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+                </div>
+                <input formControlName="email" id="InputEmail" type="email" class="form-control" placeholder="E-mail" (focus)="focus1=true" (blur)="focus1=false" >
+              </div>
+            </div>
+           
+            <div class="form-group" [ngClass]="{'has-success': formLogin.controls['password'].valid, 'has-error': formLogin.controls['password'].invalid && (formLogin.controls['password'].touched || formLogin.controls['password'].dirty)}">
+              <div class="input-group" [ngClass]="{'input-group-focus':focus2===true && formLogin.controls['password'].invalid, 'input-group-focus-success':focus2===true && formLogin.controls['password'].valid}">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="now-ui-icons objects_key-25"></i></span>
+                </div>
+                <input formControlName="password" id="InputPassword" type="password" class="form-control" placeholder="Senha" (focus)="focus2=true" (blur)="focus2=false" >
+              </div>
+            </div>
+          </div>
+          
+          <div class="footer text-center">
+            <button type="submit" class="btn btn-info btn-wd" [disabled]="formLogin.invalid" (click)="login()">
+              ENTRAR
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div _ngcontent-aym-c2="" class="text-center">
+    <p _ngcontent-aym-c2="">Desenvolvido por O. M. M.</p>
+  </div>
+</div>
