@@ -1,0 +1,106 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="input-group no-border">
+                <input type="text" [(ngModel)]="filtroLista" class="form-control" placeholder="Pesquisar...">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4 offset-md-4 text-right">
+              <a class="btn btn-info" [routerLink]="['/usuarios/cadastrar']">
+                <i class="now-ui-icons ui-1_simple-add"></i>
+                Cadastrar Usuário
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th class="th-img"></th>
+                <th>
+                  Nome
+                </th>
+                <th>
+                  E-mail
+                </th>
+                <th>
+                  Cadastrado
+                </th>
+                <th>
+                  Status
+                </th>
+                <th>
+                  Ações
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let usuario of usuariosFiltrados">
+                  <td class="text-center">
+                    <img *ngIf="usuario?.image !== 'sem_imagem'" class="avatar border-gray" src="{{usuario?.image}}" alt="">
+                    <img *ngIf="usuario?.image === 'sem_imagem'" class="avatar border-gray" src="../assets/img/sem-imagem.jpg" alt="">
+                  </td>
+                  <td>
+                    {{usuario?.name}}
+                  </td>
+                  <td>
+                    {{usuario?.email}}
+                  </td>
+                  <td>
+                    {{usuario?.created_at | date:'dd/MM/y'}}
+                  </td>
+                  <td >
+                    <span [hidden]="usuario?.status == false" style="color:#00BCD4;"><b>Ativo</b></span>
+                    <span [hidden]="usuario?.status == true" style="color:#f96332;"><b>Inativo</b></span>
+                  </td>
+                  <td class="td-actions">
+                    <a [routerLink]="['/usuarios/editar/', usuario?.id]" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" placement="top" ngbTooltip="Editar">
+                      <i class="now-ui-icons design-2_ruler-pencil"></i>
+                    </a>
+                    <button (click)="openModalExcluirUsuario(content, usuario)" type="button" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" placement="top" ngbTooltip="Excluir">
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Exclusão de perfil</h4>
+  </div>
+  <div class="modal-body">
+    <p>
+      <strong>
+        Tem certeza de que deseja excluir o perfil 
+        <span class="text-primary">{{nomeUsuarioExclusao}}</span>?
+      </strong>
+    </p>
+    <p>
+      Todas as informações associadas a este perfil de usuário serão excluídas permanentemente.
+      <span class="text-danger">Esta operação não pode ser desfeita.</span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="modal.dismiss('cancelar')">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('sim')">Sim</button>
+  </div>
+</ng-template>

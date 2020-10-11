@@ -3,14 +3,15 @@
 <div class="main-content">
   <div class="row">
 
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Editar Perfil</h5>
+          <h5 class="title">Cadastrar Usuário</h5>
         </div>
 
         <div class="card-body">
-          <form [formGroup]="formUsuario" (ngSubmit)="editaUsuario()" *ngIf="usuario">
+          
+          <form [formGroup]="formUsuario" (ngSubmit)="cadastraUsuario()">
             <div class="row">
               <div class="col-md-12">
 
@@ -49,17 +50,30 @@
 
                       <div class="row">
                         <div class="col-md-6 pr-1">
-                          <div class="form-group">
+                          <div class="form-group"
+                            [ngClass]="{'has-success': formUsuario.controls['password'].valid, 'has-error': formUsuario.controls['password'].invalid && (formUsuario.controls['password'].touched || formUsuario.controls['password'].dirty)}">
                             <label>Senha</label>
-                            <input formControlName="password" type="password" class="form-control" placeholder="******">
+                            <input formControlName="password" type="password" class="form-control" placeholder="******"
+                              [ngClass]="{'is-invalid': formUsuario.get('password').errors && formUsuario.get('password').touched}">
+                            <div
+                              *ngIf="formUsuario.get('password').hasError('required') && formUsuario.get('password').touched"
+                              class="invalid-feedback">
+                              Campo obrigatório!
+                            </div>
                           </div>
                         </div>
 
                         <div class="col-md-6 pl-1">
-                          <div class="form-group">
+                          <div class="form-group"
+                            [ngClass]="{'has-success': formUsuario.controls['confimarSenha'].valid, 'has-error': formUsuario.controls['confimarSenha'].invalid && (formUsuario.controls['confimarSenha'].touched || formUsuario.controls['confimarSenha'].dirty)}">
                             <label>Confirmar Senha</label>
-                            <input formControlName="confimarSenha" type="password" class="form-control"
-                              placeholder="******">
+                            <input formControlName="confimarSenha" type="password" class="form-control" placeholder="******"
+                              [ngClass]="{'is-invalid': formUsuario.get('confimarSenha').errors && formUsuario.get('confimarSenha').touched}">
+                            <div
+                              *ngIf="formUsuario.get('confimarSenha').hasError('required') && formUsuario.get('confimarSenha').touched"
+                              class="invalid-feedback">
+                              Campo obrigatório!
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -81,7 +95,7 @@
                     </ng-template>
                   </li>
 
-                  <li [ngbNavItem]="2" *ngIf="usuario.pessoa">
+                  <li [ngbNavItem]="2">
                     <a ngbNavLink>Pessoais</a>
                     <ng-template ngbNavContent formGroupName="pessoa">
                       <div class="row">
@@ -149,7 +163,7 @@
                     </ng-template>
                   </li>
 
-                  <li [ngbNavItem]="3" *ngIf="usuario.pessoa">
+                  <li [ngbNavItem]="3">
                     <a ngbNavLink>Endereço</a>
                     <ng-template ngbNavContent formGroupName="pessoa">
                       <div class="row">
@@ -174,7 +188,7 @@
                         <div class="col-md-4 pl-1">
                           <div class="form-group">
                             <label>UF</label>
-                            <input formControlName="uf" maxlength="2" type="text" class="form-control">
+                            <input formControlName="uf" type="text" maxlength="2" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -221,6 +235,24 @@
                       </div>
                     </ng-template>
                   </li>
+
+                  <li [ngbNavItem]="4">
+                    <a ngbNavLink>Funções</a>
+                    <ng-template ngbNavContent>
+                      <div class="row">
+                        <div class="col" *ngFor="let role of roles">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" (change)="onCheckboxChange($event)" 
+                                type="checkbox" [value]="role?.id" [checked]="rolesSelecionado !== undefined && rolesSelecionado?.value.indexOf(role?.id.toString()) !== -1">
+                                {{role?.name}}
+                                <span class="form-check-sign"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </li>
                 </ul>
 
                 <div [ngbNavOutlet]="nav" class="mt-2"></div>
@@ -230,54 +262,13 @@
                     Salvar
                   </button>
                 </div>
+
               </div>
             </div>
           </form>
+
         </div>
       </div>
     </div>
-
-    <div class="col-md-4" *ngIf="usuario">
-      <div class="card card-user">
-        <div class="image">
-          <img *ngIf="usuario?.image !== 'sem_imagem'" src="{{usuario?.image}}" style="filter:blur(15px);" alt="">
-          <img *ngIf="usuario?.image === 'sem_imagem'" src="../assets/img/sem-imagem.jpg" style="filter:blur(15px);"
-            alt="">
-        </div>
-
-        <div class="card-body">
-          <div class="author">
-            <a href="">
-              <img class="avatar border-gray" *ngIf="usuario?.image !== 'sem_imagem'" src="{{usuario?.image}}" alt="">
-              <img class="avatar border-gray" *ngIf="usuario?.image === 'sem_imagem'" src="../assets/img/sem-imagem.jpg"
-                alt="">
-              <h5 class="title">{{usuario?.name}}</h5>
-            </a>
-            <p class="description">
-              {{usuario?.email}}
-              <br>
-              {{usuario?.pessoa.cidade}}/{{usuario?.pessoa.uf}}
-            </p>
-          </div>
-          <p class="text-center">
-            <span [hidden]="usuario?.status == false" style="color:#00BCD4;"><b>Ativo</b></span>
-            <span [hidden]="usuario?.status == true" style="color:#f96332;"><b>Inativo</b></span>
-          </p>
-
-          <p class="description2 text-center">
-            Cadastrado em {{usuario?.created_at | date:'dd/MM/y'}} <br>
-          </p>
-        </div>
-
-        <hr>
-        <div class="button-container">
-          <p>Funções</p>
-          <h6 *ngFor="let role of usuario?.roles" href="#" class="text-info">
-            ► {{role?.name}}
-          </h6>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>

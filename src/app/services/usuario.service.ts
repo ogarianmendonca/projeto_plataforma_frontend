@@ -22,34 +22,30 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  // getUsuarios (): Observable<Usuario[]> {
-  //   return this.http.get<Usuario[]>(this.urlApiUsuario);
-  // }
+  getUsuarios (): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.urlApiUsuario);
+  }
 
-  // cadastrarUsuario (dados): Observable<Usuario> {
-  //   return this.http.post<Usuario>(this.urlApiUsuario + 'store', dados, httpOptions);
-  // }
+  cadastrarUsuario (dados): Observable<Usuario> {
+    return this.http.post<Usuario>(this.urlApiUsuario + 'store', dados, httpOptions);
+  }
 
-  // getUsuarioId(id) {
-  //   return this.http.get<Usuario>(this.urlApiUsuario + 'show/' + id);
-  // }
+  getUsuarioId(id) {
+    return this.http.get<Usuario>(this.urlApiUsuario + 'show/' + id);
+  }
 
   editarUsuario (id, dados): Observable<Usuario> {
     return this.http.put<Usuario>(this.urlApiUsuario + 'update/' + id, dados, httpOptions);
   }
 
-  // excluirUsuario(id) {
-  //   return this.http.put(this.urlApiUsuario + 'delete/' + id, [], httpOptions);
-  // }
+  excluirUsuario(id) {
+    return this.http.delete(this.urlApiUsuario + 'delete/' + id);
+  }
 
   enviarImagem(arquivo) {
     const formData = new FormData();
     formData.append('image', arquivo[0]);
     return this.http.post(this.urlApiUsuario + 'upload', formData);
   }
-
- 
-
- 
 
 }

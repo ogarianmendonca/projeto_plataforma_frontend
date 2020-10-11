@@ -9,7 +9,7 @@ export class ServicosExternoService {
 
   constructor(private http: HttpClient) { }
 
-  bsucarEnderecoPorCEP(cep: string): Observable<any> {
+  buscarEnderecoPorCEP(cep: string): Observable<any> {
     return this.http.get<any>('https://viacep.com.br/ws/'+cep+'/json/');
   }
 

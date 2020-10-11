@@ -22,16 +22,11 @@ export class PessoaService {
 
   constructor(private http: HttpClient) { }
 
-  // cadastrarPessoa (dados): Observable<Pessoa> {
-  //   return this.http.post<Pessoa>(this.urlApiPessoa + 'store', dados, httpOptions);
-  // }
+  cadastrarPessoa (dados): Observable<Pessoa> {
+    return this.http.post<Pessoa>(this.urlApiPessoa + 'store', dados, httpOptions);
+  }
 
   editarPessoa(id, dados): Observable<Pessoa> {
     return this.http.put<Pessoa>(this.urlApiPessoa + 'update/' + id, dados, httpOptions);
   }
-
-  // excluirPessoa(id) {
-  //   return this.http.put(this.urlApiPessoa + 'delete/' + id, [], httpOptions);
-  // }
-
 }

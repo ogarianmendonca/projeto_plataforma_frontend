@@ -10,7 +10,7 @@ export interface Pessoa {
     pais: string;
     complemento: string;
     tipo_doc: string;
-    doc_principal: string;
+    num_doc: string;
     data_nasc: string;
     sexo: string;
     telefone: string;

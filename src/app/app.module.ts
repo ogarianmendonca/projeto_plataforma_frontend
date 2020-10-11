@@ -24,31 +24,9 @@ registerLocaleData(localePt);
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#2a95df",
-  bgsOpacity: 0.5,
-  bgsPosition: "bottom-right",
-  bgsSize: 60,
-  bgsType: "ball-spin-clockwise",
-  blur: 5,
-  delay: 0,
-  fastFadeOut: true,
   fgsColor: "#2a95df",
-  fgsPosition: "center-center",
-  fgsSize: 60,
+  bgsOpacity: 0.1,
   fgsType: "folding-cube",
-  gap: 24,
-  logoPosition: "center-center",
-  logoSize: 120,
-  logoUrl: "",
-  masterLoaderId: "master",
-  overlayBorderRadius: "0",
-  overlayColor: "rgba(40, 40, 40, 0.8)",
-  pbColor: "#2a95df",
-  pbDirection: "ltr",
-  pbThickness: 3,
-  hasProgressBar: true,
-  text: "",
-  textColor: "#FFFFFF",
-  textPosition: "center-center",
 };
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>) = {

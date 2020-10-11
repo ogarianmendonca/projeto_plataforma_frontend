@@ -6,10 +6,16 @@ import { TypographyComponent } from '../../modules/typography/typography.compone
 import { IconsComponent } from '../../modules/icons/icons.component';
 import { NotificationsComponent } from '../../modules/notifications/notifications.component';
 import { UpgradeComponent } from '../../modules/upgrade/upgrade.component';
+import { UsuariosComponent } from '../../modules/usuarios/usuarios.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
+    {
+        path: 'usuarios',
+        component: UsuariosComponent,
+        loadChildren: '../../modules/usuarios/usuarios.module#UsuariosModule'
+    },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },

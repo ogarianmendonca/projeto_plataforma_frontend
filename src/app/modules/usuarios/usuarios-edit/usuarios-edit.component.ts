@@ -1,21 +1,22 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Usuario } from '../../models/usuario.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { UsuarioService } from '../../services/usuario.service';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Pessoa } from '../../models/pessoa.interface';
-import { PessoaService } from '../../services/pessoa.service';
-import { formatDate } from "@angular/common";
-import { ServicosExternoService } from '../../services/servicos-externo.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Pessoa } from '../../../models/pessoa.interface';
+import { Usuario } from '../../../models/usuario.interface';
+import { AuthService } from '../../../services/auth.service';
+import { PessoaService } from '../../../services/pessoa.service';
+import { ServicosExternoService } from '../../../services/servicos-externo.service';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-usuarios-edit',
+  templateUrl: './usuarios-edit.component.html',
+  styleUrls: ['./usuarios-edit.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class UsuariosEditComponent implements OnInit {
 
   public active = 1;
   public usuario: Usuario;
@@ -27,8 +28,8 @@ export class UserProfileComponent implements OnInit {
   public focusDtNasc: boolean = false;
 
   constructor(
-    private authService: AuthService,
     private formBuilder: FormBuilder,
+    private routerActivated: ActivatedRoute,
     private ngxLoader: NgxUiLoaderService,
     private usuarioService: UsuarioService,
     private toastr: ToastrService,
@@ -38,14 +39,15 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buscaUsuarioLogado();
+    this.buscaUsuarioSelecionado();
   }
 
-  buscaUsuarioLogado() {
+  buscaUsuarioSelecionado() {
+    const id = this.routerActivated.snapshot.params['id'];
+
     this.ngxLoader.start();
 
-    this.authService.getUsuarioAutenticado()
-      .subscribe((resp: Usuario) => {
+    this.usuarioService.getUsuarioId(id).subscribe((resp: Usuario) => {
         this.usuario = resp;
         this.validaFormUsuario(this.usuario);
         this.verificaPaisCadastrado(this.usuario.pessoa.pais);
@@ -53,7 +55,7 @@ export class UserProfileComponent implements OnInit {
         this.ngxLoader.stop();
       });
   }
-
+  
   validaFormUsuario(usuario: Usuario) {
     this.formUsuario = this.formBuilder.group({
       name: [usuario.name, [Validators.required]],
@@ -100,9 +102,9 @@ export class UserProfileComponent implements OnInit {
 
     if (!this.imagem) {
       this.usuarioService.editarUsuario(id, this.formUsuario.value).subscribe((resp: Usuario) => {
-        this.editaDadosPessoa(this.formUsuario.value.pessoa);     
+        this.editaDadosPessoa(this.formUsuario.value.pessoa);
       }, (err) => {
-        this.showAviso('Erro ao editar perfil!', 'warning', 'ui-1_bell-53');
+        this.showAviso('Erro ao editar usuário!', 'warning', 'ui-1_bell-53');
         this.ngxLoader.stop();
       });
     } else {
@@ -110,9 +112,9 @@ export class UserProfileComponent implements OnInit {
         this.formUsuario.value.image = resImg['image'];
 
         this.usuarioService.editarUsuario(id, this.formUsuario.value).subscribe((resp: Usuario) => {
-          this.editaDadosPessoa(this.formUsuario.value.pessoa);       
+          this.editaDadosPessoa(this.formUsuario.value.pessoa);
         }, (err) => {
-          this.showAviso('Erro ao editar perfil!', 'warning', 'ui-1_bell-53');
+          this.showAviso('Erro ao editar usuário!', 'warning', 'ui-1_bell-53');
           this.ngxLoader.stop();
         })
       });
@@ -121,8 +123,8 @@ export class UserProfileComponent implements OnInit {
 
   editaDadosPessoa(dadosPessoa: Pessoa) {
     this.pessoaService.editarPessoa(dadosPessoa.id, dadosPessoa).subscribe((resp: Pessoa) => {
-      this.showAviso('Perfil editado com sucesso!', 'success', 'ui-2_like');
-      this.buscaUsuarioLogado();
+      this.showAviso('Usuário editado com sucesso!', 'success', 'ui-2_like');
+      this.buscaUsuarioSelecionado();
       this.active = 1;
       return true;
     }, (err) => {

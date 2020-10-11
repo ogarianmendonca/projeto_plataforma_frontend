@@ -1,31 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Usuario } from '../../models/usuario.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { UsuarioService } from '../../services/usuario.service';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Pessoa } from '../../models/pessoa.interface';
-import { PessoaService } from '../../services/pessoa.service';
-import { formatDate } from "@angular/common";
-import { ServicosExternoService } from '../../services/servicos-externo.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Role } from '../../../models/role.interface';
+import { RoleService } from '../../../services/role.service';
+import { Pessoa } from '../../../models/pessoa.interface';
+import { Usuario } from '../../../models/usuario.interface';
+import { AuthService } from '../../../services/auth.service';
+import { PessoaService } from '../../../services/pessoa.service';
+import { ServicosExternoService } from '../../../services/servicos-externo.service';
+import { UsuarioService } from '../../../services/usuario.service';
+import { formatDate } from '@angular/common';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-usuarios-create',
+  templateUrl: './usuarios-create.component.html',
+  styleUrls: ['./usuarios-create.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class UsuariosCreateComponent implements OnInit {
 
   public active = 1;
   public usuario: Usuario;
   public formUsuario: FormGroup;
   public imagem: Set<File>;
-  public paisSelecionadoBrasil: boolean = false;
+  public paisSelecionadoBrasil: boolean = true;
   public docSelecionadoCPF: boolean = false;
   public dataVigente: Date = new Date();
+  public roles: Role[];
+  public rolesSelecionado: FormArray;
   public focusDtNasc: boolean = false;
-
+  
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -33,51 +37,48 @@ export class UserProfileComponent implements OnInit {
     private usuarioService: UsuarioService,
     private toastr: ToastrService,
     private pessoaService: PessoaService,
-    private externoService: ServicosExternoService
-  ) {
-  }
+    private externoService: ServicosExternoService,
+    private roleService: RoleService
+  ) { }
 
   ngOnInit() {
-    this.buscaUsuarioLogado();
+    this.validaFormUsuario();
+    this.buscarRoles();
   }
 
-  buscaUsuarioLogado() {
+  buscarRoles() {
     this.ngxLoader.start();
 
-    this.authService.getUsuarioAutenticado()
-      .subscribe((resp: Usuario) => {
-        this.usuario = resp;
-        this.validaFormUsuario(this.usuario);
-        this.verificaPaisCadastrado(this.usuario.pessoa.pais);
-        this.verificaDocumentoCadastrado(this.usuario.pessoa.tipo_doc);
-        this.ngxLoader.stop();
-      });
+    this.roleService.getRoles().subscribe((resp: Role[]) => {
+      this.roles = resp;
+      this.ngxLoader.stop();
+    })
   }
 
-  validaFormUsuario(usuario: Usuario) {
+  validaFormUsuario() {
     this.formUsuario = this.formBuilder.group({
-      name: [usuario.name, [Validators.required]],
-      email: [usuario.email, [Validators.required, Validators.email]],
-      status: [usuario.status],
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      status: [''],
       image: [''],
-      password: [''],
-      confimarSenha: [''],
+      password: ['', [Validators.required]],
+      confimarSenha: ['', [Validators.required]],
+      roles: this.formBuilder.array([]),
       pessoa: this.formBuilder.group({
-        id: [usuario.pessoa.id],
-        usuario_id: [usuario.pessoa.usuario_id],
-        endereco: [usuario.pessoa.endereco],
-        bairro: [usuario.pessoa.bairro],
-        cidade: [usuario.pessoa.cidade],
-        numero: [usuario.pessoa.numero],
-        uf: [usuario.pessoa.uf],
-        cep: [usuario.pessoa.cep],
-        pais: [usuario.pessoa.pais],
-        complemento: [usuario.pessoa.complemento],
-        tipo_doc: [usuario.pessoa.tipo_doc],
-        num_doc: [usuario.pessoa.num_doc],
-        data_nasc: [formatDate(usuario.pessoa.data_nasc ?? this.dataVigente, 'dd/MM/yyyy', 'pt-BR')],
-        sexo: [usuario.pessoa.sexo],
-        telefone: [usuario.pessoa.telefone]
+        usuario_id: [''],
+        endereco: [''],
+        bairro: [''],
+        cidade: [''],
+        numero: [''],
+        uf: [''],
+        cep: [''],
+        pais: ['BRASIL'],
+        complemento: [''],
+        tipo_doc: [''],
+        num_doc: [''],
+        data_nasc: [formatDate(this.dataVigente, 'dd/MM/yyyy', 'pt-BR')],
+        sexo: [''],
+        telefone: ['']
       })
     });
   }
@@ -86,7 +87,7 @@ export class UserProfileComponent implements OnInit {
     this.imagem = event.target.files;
   }
 
-  editaUsuario() {
+  cadastraUsuario() {
     this.ngxLoader.start();
 
     if (this.formUsuario.value.password !== this.formUsuario.value.confimarSenha) {
@@ -95,40 +96,40 @@ export class UserProfileComponent implements OnInit {
       return false;
     }
 
-    const id = this.usuario['id'];
     this.formataDataNascimentoEnvio(this.formUsuario.value.pessoa.data_nasc);
 
     if (!this.imagem) {
-      this.usuarioService.editarUsuario(id, this.formUsuario.value).subscribe((resp: Usuario) => {
-        this.editaDadosPessoa(this.formUsuario.value.pessoa);     
+      this.usuarioService.cadastrarUsuario(this.formUsuario.value).subscribe((resp: any) => {
+        this.cadastraDadosPessoa(resp.user.id, this.formUsuario.value.pessoa);
       }, (err) => {
-        this.showAviso('Erro ao editar perfil!', 'warning', 'ui-1_bell-53');
+        this.showAviso('Erro ao cadastrar usuário!', 'warning', 'ui-1_bell-53');
         this.ngxLoader.stop();
       });
     } else {
       this.usuarioService.enviarImagem(this.imagem).subscribe(resImg => {
         this.formUsuario.value.image = resImg['image'];
 
-        this.usuarioService.editarUsuario(id, this.formUsuario.value).subscribe((resp: Usuario) => {
-          this.editaDadosPessoa(this.formUsuario.value.pessoa);       
+        this.usuarioService.cadastrarUsuario(this.formUsuario.value).subscribe((resp: any) => {
+          this.cadastraDadosPessoa(resp.user.id, this.formUsuario.value.pessoa);
         }, (err) => {
-          this.showAviso('Erro ao editar perfil!', 'warning', 'ui-1_bell-53');
+          this.showAviso('Erro ao cadastrar usuário!', 'warning', 'ui-1_bell-53');
           this.ngxLoader.stop();
         })
       });
     }
   }
 
-  editaDadosPessoa(dadosPessoa: Pessoa) {
-    this.pessoaService.editarPessoa(dadosPessoa.id, dadosPessoa).subscribe((resp: Pessoa) => {
-      this.showAviso('Perfil editado com sucesso!', 'success', 'ui-2_like');
-      this.buscaUsuarioLogado();
+  cadastraDadosPessoa(usuarioId: any, dadosPessoa: Pessoa) {
+    dadosPessoa.usuario_id = usuarioId;
+
+    this.pessoaService.cadastrarPessoa(dadosPessoa).subscribe((resp: Pessoa) => {
+      this.showAviso('Usuário cadastrado com sucesso!', 'success', 'ui-2_like');
+      this.validaFormUsuario();
       this.active = 1;
-      return true;
-    }, (err) => {
-      this.showAviso('Erro ao editar dados pessoais e endereço!', 'warning', 'ui-1_bell-53');
       this.ngxLoader.stop();
-      return false;
+    }, (err) => {
+      this.showAviso('Erro ao cadastrar dados do usuário!', 'warning', 'ui-1_bell-53');
+      this.ngxLoader.stop();
     });
   }
 
@@ -143,27 +144,12 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  verificaDocumentoCadastrado(tipoDoc: string) {
-    if (tipoDoc == 'CPF') {
-      this.docSelecionadoCPF = true;
-    } else {
-      this.docSelecionadoCPF = false;
-    }
-  }
-
   verificaDocumentoSelecionado(event: any) {
+    this.formUsuario.patchValue({pessoa: {num_doc: ''}});
     if (event.target.value == 'CPF') {
       this.docSelecionadoCPF = true;
     } else {
       this.docSelecionadoCPF = false;
-    }
-  }
-
-  verificaPaisCadastrado(pais: string) {
-    if (pais && (pais.toUpperCase() == 'Brasil' || pais.toUpperCase() == 'BRASIL')) {
-      this.paisSelecionadoBrasil = true;
-    } else {
-      this.paisSelecionadoBrasil = false;
     }
   }
 
@@ -185,7 +171,7 @@ export class UserProfileComponent implements OnInit {
           this.ngxLoader.stop();
           return;
         }
-        
+
         this.formUsuario.patchValue(
           {
             pessoa: {
@@ -204,6 +190,23 @@ export class UserProfileComponent implements OnInit {
       }, (err) => {
         this.showAviso('CEP não encontrado!', 'warning', 'ui-1_bell-53');
         this.ngxLoader.stop();
+      });
+    }
+  }
+  
+  onCheckboxChange(e) {
+    this.rolesSelecionado = this.formUsuario.get('roles') as FormArray;
+    
+    if (e.target.checked) {
+      this.rolesSelecionado.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      this.rolesSelecionado.controls.forEach((item: FormControl) => {
+        if (item.value == e.target.value) {
+          this.rolesSelecionado.removeAt(i);
+          return;
+        }
+        i++;
       });
     }
   }
