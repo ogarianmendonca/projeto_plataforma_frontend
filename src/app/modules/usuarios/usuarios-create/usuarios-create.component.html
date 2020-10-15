@@ -243,8 +243,12 @@
                         <div class="col" *ngFor="let role of roles">
                           <div class="form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" (change)="onCheckboxChange($event)" 
-                                type="checkbox" [value]="role?.id" [checked]="rolesSelecionado !== undefined && rolesSelecionado?.value.indexOf(role?.id.toString()) !== -1">
+                                <input class="form-check-input" 
+                                  (change)="onCheckboxChange($event)" 
+                                  type="checkbox" 
+                                  [value]="role?.id" 
+                                  [checked]="rolesSelecionado !== undefined &&
+                                   rolesSelecionado?.value.indexOf(role?.id.toString()) !== -1">
                                 {{role?.name}}
                                 <span class="form-check-sign"></span>
                             </label>
@@ -258,7 +262,7 @@
                 <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
                 <div class="text-right">
-                  <button [disabled]="formUsuario.invalid" type="submit" class="btn btn-info">
+                  <button [disabled]="formUsuario.invalid" type="submit" class="btn btn-info btn-round">
                     Salvar
                   </button>
                 </div>

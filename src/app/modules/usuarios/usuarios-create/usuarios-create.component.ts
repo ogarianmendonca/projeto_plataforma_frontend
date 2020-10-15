@@ -6,7 +6,6 @@ import { Role } from '../../../models/role.interface';
 import { RoleService } from '../../../services/role.service';
 import { Pessoa } from '../../../models/pessoa.interface';
 import { Usuario } from '../../../models/usuario.interface';
-import { AuthService } from '../../../services/auth.service';
 import { PessoaService } from '../../../services/pessoa.service';
 import { ServicosExternoService } from '../../../services/servicos-externo.service';
 import { UsuarioService } from '../../../services/usuario.service';
@@ -31,7 +30,6 @@ export class UsuariosCreateComponent implements OnInit {
   public focusDtNasc: boolean = false;
   
   constructor(
-    private authService: AuthService,
     private formBuilder: FormBuilder,
     private ngxLoader: NgxUiLoaderService,
     private usuarioService: UsuarioService,
@@ -126,6 +124,7 @@ export class UsuariosCreateComponent implements OnInit {
       this.showAviso('Usuário cadastrado com sucesso!', 'success', 'ui-2_like');
       this.validaFormUsuario();
       this.active = 1;
+      this.rolesSelecionado.clear();
       this.ngxLoader.stop();
     }, (err) => {
       this.showAviso('Erro ao cadastrar dados do usuário!', 'warning', 'ui-1_bell-53');

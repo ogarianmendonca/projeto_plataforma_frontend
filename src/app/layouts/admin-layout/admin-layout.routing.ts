@@ -5,7 +5,6 @@ import { TableListComponent } from '../../modules/table-list/table-list.componen
 import { TypographyComponent } from '../../modules/typography/typography.component';
 import { IconsComponent } from '../../modules/icons/icons.component';
 import { NotificationsComponent } from '../../modules/notifications/notifications.component';
-import { UpgradeComponent } from '../../modules/upgrade/upgrade.component';
 import { UsuariosComponent } from '../../modules/usuarios/usuarios.component';
 
 export const AdminLayoutRoutes: Routes = [
@@ -20,5 +19,4 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent }
 ];

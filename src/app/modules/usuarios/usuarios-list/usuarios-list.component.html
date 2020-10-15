@@ -17,8 +17,8 @@
               </div>
             </div>
 
-            <div class="col-sm-4 offset-md-4 text-right">
-              <a class="btn btn-info" [routerLink]="['/usuarios/cadastrar']">
+            <div class="col-sm-4 offset-md-4 text-right" *ngIf="acaoPermitida">
+              <a class="btn btn-info btn-round" [routerLink]="['/usuarios/cadastrar']">
                 <i class="now-ui-icons ui-1_simple-add"></i>
                 Cadastrar Usuário
               </a>
@@ -42,7 +42,7 @@
                 <th>
                   Status
                 </th>
-                <th>
+                <th class="th-acoes" *ngIf="acaoPermitida">
                   Ações
                 </th>
               </thead>
@@ -65,12 +65,15 @@
                     <span [hidden]="usuario?.status == false" style="color:#00BCD4;"><b>Ativo</b></span>
                     <span [hidden]="usuario?.status == true" style="color:#f96332;"><b>Inativo</b></span>
                   </td>
-                  <td class="td-actions">
+                  <td class="td-actions" *ngIf="acaoPermitida">
                     <a [routerLink]="['/usuarios/editar/', usuario?.id]" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" placement="top" ngbTooltip="Editar">
                       <i class="now-ui-icons design-2_ruler-pencil"></i>
                     </a>
                     <button (click)="openModalExcluirUsuario(content, usuario)" type="button" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" placement="top" ngbTooltip="Excluir">
                       <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    <button (click)="openModalAlterarFuncoes(content2, usuario)" type="button" class="btn btn-warning btn-round btn-icon btn-icon-mini btn-neutral" placement="top" ngbTooltip="Funções">
+                      <i class="now-ui-icons ui-1_settings-gear-63"></i>
                     </button>
                   </td>
                 </tr>
@@ -91,7 +94,7 @@
     <p>
       <strong>
         Tem certeza de que deseja excluir o perfil 
-        <span class="text-primary">{{nomeUsuarioExclusao}}</span>?
+        <span class="text-danger">{{usuario?.name}}</span>?
       </strong>
     </p>
     <p>
@@ -102,5 +105,39 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-info" (click)="modal.dismiss('cancelar')">Cancelar</button>
     <button type="button" class="btn btn-danger" (click)="modal.close('sim')">Sim</button>
+  </div>
+</ng-template>
+
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Funções</h4>
+  </div>
+  <div class="modal-body">
+    <p>
+      <strong>
+        Alterar funções do perfil 
+        <span class="text-primary">{{usuario?.name}}</span>
+      </strong>
+    </p>
+    <div class="row">
+      <div class="col" *ngFor="let role of roles">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" 
+              (change)="onCheckboxChange($event)" 
+              type="checkbox" 
+              [value]="role?.id"
+              [checked]="rolesSelecionado !== undefined && 
+              rolesSelecionado?.value.indexOf(role?.id.toString()) !== -1">
+            {{role?.name}}
+            <span class="form-check-sign"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="modal.dismiss('cancelar')">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('sim')">Salvar</button>
   </div>
 </ng-template>
