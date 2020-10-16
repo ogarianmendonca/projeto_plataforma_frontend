@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { AdminLayoutRoutes } from './admin-layout.routing';
@@ -15,6 +14,7 @@ import { TypographyComponent } from '../../modules/typography/typography.compone
 import { IconsComponent } from '../../modules/icons/icons.component';
 import { NotificationsComponent } from '../../modules/notifications/notifications.component';
 import { UsuariosModule } from '../../modules/usuarios/usuarios.module';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [

@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
-import Chart from 'chart.js';
 import { AuthService } from '../../services/auth.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Usuario } from '../../models/usuario.interface';

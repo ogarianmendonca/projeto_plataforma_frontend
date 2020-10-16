@@ -18,15 +18,15 @@ const httpOptions = {
 })
 export class PessoaService {
 
-  private urlApiPessoa = environment.api_url + 'pessoas/';
+  private urlApiPessoa = environment.api_url + 'pessoas';
 
   constructor(private http: HttpClient) { }
 
   cadastrarPessoa (dados): Observable<Pessoa> {
-    return this.http.post<Pessoa>(this.urlApiPessoa + 'store', dados, httpOptions);
+    return this.http.post<Pessoa>(this.urlApiPessoa + '/store', dados, httpOptions);
   }
 
   editarPessoa(id, dados): Observable<Pessoa> {
-    return this.http.put<Pessoa>(this.urlApiPessoa + 'update/' + id, dados, httpOptions);
+    return this.http.put<Pessoa>(this.urlApiPessoa + '/update/' + id, dados, httpOptions);
   }
 }
