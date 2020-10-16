@@ -19,7 +19,7 @@
                     <a ngbNavLink>Dados Básicos</a>
                     <ng-template ngbNavContent>
                       <div class="row">
-                        <div class="col-md-6 pr-1">
+                        <div class="col-md-6">
                           <div class="form-group"
                             [ngClass]="{'has-success': formUsuario.controls['name'].valid, 'has-error': formUsuario.controls['name'].invalid && (formUsuario.controls['name'].touched || formUsuario.controls['name'].dirty)}">
                             <label>Nome</label>
@@ -32,7 +32,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-6 pl-1">
+                        <div class="col-md-6">
                           <div class="form-group"
                             [ngClass]="{'has-success': formUsuario.controls['email'].valid, 'has-error': formUsuario.controls['email'].invalid && (formUsuario.controls['email'].touched || formUsuario.controls['email'].dirty)}">
                             <label for="email">E-mail</label>
@@ -48,14 +48,14 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-6 pr-1">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label>Senha</label>
                             <input formControlName="password" type="password" class="form-control" placeholder="******">
                           </div>
                         </div>
 
-                        <div class="col-md-6 pl-1">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label>Confirmar Senha</label>
                             <input formControlName="confimarSenha" type="password" class="form-control"
@@ -65,7 +65,7 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-6 pr-1">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label>Imagem do Perfil</label>
                             <br>
@@ -85,7 +85,7 @@
                     <a ngbNavLink>Pessoais</a>
                     <ng-template ngbNavContent formGroupName="pessoa">
                       <div class="row">
-                        <div class="col-md-3 pr-1">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label>Documento</label>
                             <select (change)="verificaDocumentoSelecionado($event)" formControlName="tipo_doc"
@@ -97,7 +97,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-4 px-1">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>Número</label>
                             <input *ngIf="docSelecionadoCPF" formControlName="num_doc" mask="000.000.000-00" type="text"
@@ -107,7 +107,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-5 pl-1">
+                        <div class="col-md-5">
                           <div class="form-group">
                             <label>Data Nascimento</label>
                             <div class="input-group" [ngClass]="{'input-group-focus':focusDtNasc===true}">
@@ -128,7 +128,7 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-3 pr-1">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label>Sexo</label>
                             <select formControlName="sexo" class="form-control">
@@ -139,7 +139,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-4 pl-1">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>Telefone</label>
                             <input formControlName="telefone" mask="(00) 00000-0000" type="text" class="form-control">
@@ -153,7 +153,7 @@
                     <a ngbNavLink>Endereço</a>
                     <ng-template ngbNavContent formGroupName="pessoa">
                       <div class="row">
-                        <div class="col-md-4 pr-1">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>País</label>
                             <input formControlName="pais" (keyup)="verificaPaisSelecionado($event)" type="text"
@@ -161,7 +161,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-4 px-1">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>CEP</label>
                             <input *ngIf="paisSelecionadoBrasil" formControlName="cep" mask="00000-000"
@@ -171,7 +171,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-4 pl-1">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>UF</label>
                             <input formControlName="uf" maxlength="2" type="text" class="form-control">
@@ -180,14 +180,14 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-6 pr-1">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label>Cidade</label>
                             <input formControlName="cidade" type="text" class="form-control">
                           </div>
                         </div>
 
-                        <div class="col-md-6 pl-1">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label>Endereço</label>
                             <input formControlName="endereco" type="text" class="form-control">
@@ -196,14 +196,14 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-6 pr-1">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label>Bairro</label>
                             <input formControlName="bairro" type="text" class="form-control">
                           </div>
                         </div>
 
-                        <div class="col-md-6 pl-1">
+                        <div class="col-md-6">
                           <div class="form-group">
                             <label>Complemento</label>
                             <input formControlName="complemento" type="text" class="form-control">
@@ -212,7 +212,7 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-4 pr-1">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>Número</label>
                             <input formControlName="numero" type="text" class="form-control">
