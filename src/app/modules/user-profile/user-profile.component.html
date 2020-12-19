@@ -256,7 +256,9 @@
             <p class="description">
               {{usuario?.email}}
               <br>
-              {{usuario?.pessoa.cidade}}/{{usuario?.pessoa.uf}}
+              <span *ngIf="usuario?.pessoa.cidade">
+                {{usuario?.pessoa.cidade}}/{{usuario?.pessoa.uf}}
+              </span>
             </p>
           </div>
           <p class="text-center">

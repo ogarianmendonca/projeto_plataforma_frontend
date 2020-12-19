@@ -82,6 +82,15 @@
           </div>
         </div>
       </div>
+
+      <div>
+        <ngb-pagination 
+          [collectionSize]="totalPaginas" 
+          [(page)]="paginaAtual"
+          size="sm"
+          (pageChange)="loadPage($event)">
+        </ngb-pagination>
+      </div>
     </div>
   </div>
 </div>

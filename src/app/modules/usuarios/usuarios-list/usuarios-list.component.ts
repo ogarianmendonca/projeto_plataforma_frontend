@@ -26,6 +26,9 @@ export class UsuariosListComponent implements OnInit {
   public usuarioLogado: Usuario;
   public acaoPermitida: boolean = false;
 
+  public totalPaginas: number;
+  public paginaAtual: number;
+
   constructor(
     private usuarioService: UsuarioService,
     private ngxLoader: NgxUiLoaderService,
@@ -67,14 +70,21 @@ export class UsuariosListComponent implements OnInit {
     );
   }
 
-  buscarUsuarios() {
+  buscarUsuarios(pagina = 1) {
     this.ngxLoader.start();
     
-    this.usuarioService.getUsuarios().subscribe((resp: Usuario[]) => {
-      this.usuarios = resp;
-      this.usuariosFiltrados = resp;
+    this.usuarioService.getUsuarios(pagina).subscribe((resp) => {
+      this.totalPaginas = resp['last_page'] * 10; 
+      this.paginaAtual =  resp['current_page'];
+
+      this.usuarios = resp['data'];
+      this.usuariosFiltrados = resp['data'];
       this.ngxLoader.stop();
     });
+  }
+
+  loadPage(numProximaPagina) {
+    this.buscarUsuarios(numProximaPagina);
   }
   
   buscarRoles() {
