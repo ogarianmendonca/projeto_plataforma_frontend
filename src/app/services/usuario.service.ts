@@ -17,7 +17,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UsuarioService {
-
   private urlApiUsuario = environment.api_url + 'usuarios';
 
   constructor(private http: HttpClient) { }

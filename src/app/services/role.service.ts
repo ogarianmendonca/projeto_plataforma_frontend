@@ -8,7 +8,6 @@ import { Role } from '../models/role.interface';
   providedIn: 'root'
 })
 export class RoleService {
-
   private urlApiUsuario = environment.api_url + 'roles';
 
   constructor(private http: HttpClient) { }

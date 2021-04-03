@@ -15,7 +15,6 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./usuarios-list.component.scss']
 })
 export class UsuariosListComponent implements OnInit {
-
   public usuarios: Usuario[];
   public usuario: Usuario;
   public _filtroLista = '';

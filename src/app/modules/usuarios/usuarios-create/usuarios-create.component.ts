@@ -17,7 +17,6 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./usuarios-create.component.scss']
 })
 export class UsuariosCreateComponent implements OnInit {
-
   public active = 1;
   public usuario: Usuario;
   public formUsuario: FormGroup;
@@ -90,6 +89,12 @@ export class UsuariosCreateComponent implements OnInit {
 
     if (this.formUsuario.value.password !== this.formUsuario.value.confimarSenha) {
       this.showAviso('As senhas não conferem!', 'warning', 'ui-1_bell-53');
+      this.ngxLoader.stop();
+      return false;
+    }
+
+    if (this.formUsuario.value.roles.length == 0) {
+      this.showAviso('Selecione ao menos uma função!', 'warning', 'ui-1_bell-53');
       this.ngxLoader.stop();
       return false;
     }

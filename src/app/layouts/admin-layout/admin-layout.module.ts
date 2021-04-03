@@ -9,10 +9,6 @@ import { NgxMaskModule } from 'ngx-mask';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../modules/dashboard/dashboard.component';
 import { UserProfileComponent } from '../../modules/user-profile/user-profile.component';
-import { TableListComponent } from '../../modules/table-list/table-list.component';
-import { TypographyComponent } from '../../modules/typography/typography.component';
-import { IconsComponent } from '../../modules/icons/icons.component';
-import { NotificationsComponent } from '../../modules/notifications/notifications.component';
 import { UsuariosModule } from '../../modules/usuarios/usuarios.module';
 import { ChartsModule } from 'ng2-charts';
 
@@ -32,10 +28,6 @@ import { ChartsModule } from 'ng2-charts';
   declarations: [
     DashboardComponent,
     UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    NotificationsComponent,
   ]
 })
 

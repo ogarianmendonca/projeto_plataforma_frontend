@@ -16,7 +16,6 @@ import { ServicosExternoService } from '../../services/servicos-externo.service'
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-
   public active = 1;
   public usuario: Usuario;
   public formUsuario: FormGroup;

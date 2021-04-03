@@ -17,7 +17,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PessoaService {
-
   private urlApiPessoa = environment.api_url + 'pessoas';
 
   constructor(private http: HttpClient) { }

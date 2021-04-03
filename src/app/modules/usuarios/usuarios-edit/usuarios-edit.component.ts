@@ -17,7 +17,6 @@ import { UsuarioService } from '../../../services/usuario.service';
   styleUrls: ['./usuarios-edit.component.scss']
 })
 export class UsuariosEditComponent implements OnInit {
-
   public active = 1;
   public usuario: Usuario;
   public formUsuario: FormGroup;
